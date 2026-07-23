@@ -21,6 +21,17 @@ class Linear:
             erro.backward()
             self.optimi.step()
             self.optimi.zero_grad()
+    def predict(self, X):
+        if isinstance(X, np.ndarray):
+            X = to.from_numpy(X).float()
+
+        elif isinstance(X, (int, float)):
+            X = to.tensor([[X]], dtype=to.float32)
+
+        elif isinstance(X, to.Tensor):
+            X = X.float()
+
+        return self.neoronio(X)
             
 
         

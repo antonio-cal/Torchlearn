@@ -1,1 +1,1 @@
-from .neoronio import *
+from .neoronio import Linear
