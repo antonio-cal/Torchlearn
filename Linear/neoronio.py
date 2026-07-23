@@ -16,6 +16,10 @@ class Linear:
                 Y = to.from_numpy(Y).float()
             else:
                 Y = Y.float()
+            if isinstance(X, list):
+                X= to.tensor(X).float()
+            if isinstance(Y, list):
+                Y=to.tensor(Y).float()
             prev=self.neoronio(X)
             erro=self.criterio(prev, Y)
             erro.backward()
