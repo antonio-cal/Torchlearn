@@ -6,34 +6,18 @@ class Linear:
         self.criterio=to.nn.MSELoss()
         self.optimi=to.optim.SGD(self.neoronio.parameters(), 0.01)
     def fit(self, X, Y):
+        X = to.as_tensor(X, dtype=to.float32)
+        Y = to.as_tensor(Y, dtype=to.float32)
         for i in range(1000):
-            if isinstance(X, np.ndarray):
-                X = to.from_numpy(X).float()
-            else:
-                X = X.float()
-
-            if isinstance(Y, np.ndarray):
-                Y = to.from_numpy(Y).float()
-            else:
-                Y = Y.float()
-            if isinstance(X, list):
-                X= to.tensor(X).float()
-            if isinstance(Y, list):
-                Y=to.tensor(Y).float()
             prev=self.neoronio(X)
             erro=self.criterio(prev, Y)
             erro.backward()
             self.optimi.step()
             self.optimi.zero_grad()
+            if erro.item() <= 0.001:
+                break
     def predict(self, X):
-        if isinstance(X, np.ndarray):
-            X = to.from_numpy(X).float()
-
-        elif isinstance(X, (int, float)):
-            X = to.tensor([[X]], dtype=to.float32)
-
-        elif isinstance(X, to.Tensor):
-            X = X.float()
+        X = to.as_tensor(X, dtype=to.float32)
 
         return self.neoronio(X)
             
